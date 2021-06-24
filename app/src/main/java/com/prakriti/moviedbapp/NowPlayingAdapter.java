@@ -35,7 +35,6 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.No
     public void onBindViewHolder(@NonNull NowPlayingViewHolder holder, int position) {
         ResultsClass result = resultList.get(position);
         Glide.with(context).load(result.getPosterPath()).into(holder.imageNowPlaying);
-//        Picasso.get().load(result.getPosterPath()).into(holder.imageNowPlaying);
     }
 
     @Override

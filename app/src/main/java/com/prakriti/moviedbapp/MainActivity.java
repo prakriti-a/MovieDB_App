@@ -81,10 +81,6 @@ public class MainActivity extends AppCompatActivity {
                 return isLastPage;
             }
             @Override
-            public int totalNumberOfPages() {
-                return TOTAL_PAGES;
-            }
-            @Override
             protected void loadNext() {
                 isLoading = true;
                 currentPage++;
@@ -127,10 +123,7 @@ public class MainActivity extends AppCompatActivity {
                     // set total number of pages
 //                    TOTAL_PAGES = response.body().getTotalPages();
                     mostPopularAdapter.addAllItems(myMostPopularResultsList);
-//                    if(currentPage < TOTAL_PAGES) { // <= ????
-//                        // add Loading
-//                        progressBar.setVisibility(View.VISIBLE);
-//                    }
+
                 }
             }
             @Override
@@ -155,14 +148,10 @@ public class MainActivity extends AppCompatActivity {
                             myMostPopularResultsList = response.body().getResultsList();
                             Log.i(TAG, "MOST POPULAR: PG NO " + response.body().getPageNumber());
                             progressBar.setVisibility(View.GONE);
-                            //  remove Loading
                             isLoading = false;
                             // add items to list in recycler adapter
                             mostPopularAdapter.addAllItems(myMostPopularResultsList);
 
-//                    if(currentPage != TOTAL_PAGES) {
-//                        progressBar.setVisibility(View.VISIBLE);
-//                    }
                             if(currentPage == TOTAL_PAGES) {
                                 isLastPage = true;
                                 Log.i(TAG, "END REACHED");
@@ -177,13 +166,3 @@ public class MainActivity extends AppCompatActivity {
             }}, 1500);
     }
 }
-
-/*
-    pagination -> pass page size and page numbers on firing api
-    use onChildSelectedListener for vertical recycler view portion
-    learn pagination
-    load 10 in 1 page, start loading the next page once no 5-6 is loaded
-            check out where progress bar should be placed
-put new items to list
- adapter- add loading bar at footer
- */

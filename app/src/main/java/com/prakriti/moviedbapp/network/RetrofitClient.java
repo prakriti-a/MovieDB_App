@@ -1,4 +1,4 @@
-package com.prakriti.moviedbapp;
+package com.prakriti.moviedbapp.network;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
+// singleton
 
     private static Retrofit retrofit;
 

@@ -23,7 +23,7 @@ public abstract class PageScrollListener extends RecyclerView.OnScrollListener {
             firstVisibleItemPos = linearLayoutManager.findFirstVisibleItemPosition(); // adapter position of first visible view
 
             if(!isLastPage() && !isLoadingPage()) {
-                // if page is not currently loading &is not last page, load more pages
+                // if page is not currently loading & is not last page, load more pages
                 if(firstVisibleItemPos>=0 && (visibleItems + firstVisibleItemPos) >= totalItems) {
                     loadNext();
                 }

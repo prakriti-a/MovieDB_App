@@ -1,4 +1,4 @@
-package com.prakriti.moviedbapp;
+package com.prakriti.moviedbapp.pojo;
 
 import com.google.gson.annotations.SerializedName;
 

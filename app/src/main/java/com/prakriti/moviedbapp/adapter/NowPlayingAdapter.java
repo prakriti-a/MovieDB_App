@@ -1,4 +1,4 @@
-package com.prakriti.moviedbapp;
+package com.prakriti.moviedbapp.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
+import com.prakriti.moviedbapp.R;
+import com.prakriti.moviedbapp.pojo.ResultsClass;
 
 import java.util.List;
 

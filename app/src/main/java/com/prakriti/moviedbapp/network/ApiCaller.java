@@ -15,9 +15,9 @@ public interface ApiCaller {
     String BASE_URL = "https://api.themoviedb.org/3/movie/"; // use page to change pages
 
 
-    @GET("now_playing")
+    @GET("now_playing") // horizontal rv
     Call<MovieInfoWrapper> getNowPlayingMovies(@Query("language") String language, @Query("page") int page, @Query("api_key") String api_key);
 
-    @GET("popular")
+    @GET("popular") // vertical rv
     Call<MovieInfoWrapper> getMostPopularMovies(@Query("api_key") String api_key, @Query("language") String language, @Query("page") int page);
 }

@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private MostPopularAdapter mostPopularAdapter; // will use pagination
     private List<ResultsClass> myNowPlayingResultsList, myMostPopularResultsList;
     private LinearLayoutManager verticalLayoutManager, horizontalLayoutManager;
-    private ApiCaller apiCaller;
+//    private ApiCaller apiCaller;
     private ProgressBar progressBar;
     private Handler handler;
     private MovieViewModel movieViewModel;
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
-        apiCaller = RetrofitClient.getClient(this).create(ApiCaller.class);
+//        apiCaller = RetrofitClient.getClient(this).create(ApiCaller.class);
         handler = new Handler();
 
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
@@ -80,9 +80,8 @@ public class MainActivity extends AppCompatActivity {
         verticalRecyclerView.setLayoutManager(verticalLayoutManager);
         horizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
 
-        // retrofit call for now playing movie list
-        getNowPlayingMoviesInfo();
-        movieViewModel.getLiveDataInstance().observe(this, new Observer<MovieInfoWrapper>() {
+        // NOW PLAYING horizontal list
+        movieViewModel.getLiveDataForHorizontalView(1).observe(this, new Observer<MovieInfoWrapper>() {
             @Override
             public void onChanged(MovieInfoWrapper movieInfoWrapper) {
                 if(movieInfoWrapper != null) {
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // set listener for vertical recycler view -> pagination
+        // listener for vertical view -> pagination
         verticalRecyclerView.addOnScrollListener(new PageScrollListener(verticalLayoutManager) {
             @Override
             public boolean isLoadingPage() {
@@ -111,13 +110,14 @@ public class MainActivity extends AppCompatActivity {
             protected void loadNext() {
                 isLoading = true;
                 currentPage++;
-                loadMostPopularNextPage();
+                loadMostPopularNextPage(currentPage);
+                Log.i(getString(R.string.TAG), "loadNext() called");
             }
         });
 
-        // retrofit call for most popular movie list
-        getMostPopularMoviesFirstPage(); // loads first page
-        movieViewModel.getLiveDataInstance().observe(this, new Observer<MovieInfoWrapper>() {
+        // MOST POPULAR vertical list
+        getMostPopularMoviesFirstPage();
+        movieViewModel.getLiveDataForVerticalView(currentPage).observe(this, new Observer<MovieInfoWrapper>() {
             @Override
             public void onChanged(MovieInfoWrapper movieInfoWrapper) {
                 if(movieInfoWrapper != null) {
@@ -135,49 +135,49 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void getNowPlayingMoviesInfo() {
-        Call<MovieInfoWrapper> movieInfo = apiCaller.getNowPlayingMovies(language, 1, apiKey); // page=undefined
+//    private void getNowPlayingMoviesInfo() {
+//        Call<MovieInfoWrapper> movieInfo = apiCaller.getNowPlayingMovies(language, 1, apiKey); // page=undefined
         // pass call to view model
-        movieViewModel.makeApiCall(movieInfo);
-    }
+//        movieViewModel.makeApiCall(movieInfo);
+  //  }
 
     private void getMostPopularMoviesFirstPage() { // loads first page
         progressBar.setVisibility(View.VISIBLE);
-        Call<MovieInfoWrapper> movieInfo = apiCaller.getMostPopularMovies(apiKey, language, 1); // PAGE_START
-        movieViewModel.makeApiCall(movieInfo);
+//        Call<MovieInfoWrapper> movieInfo = apiCaller.getMostPopularMovies(apiKey, language, 1); // PAGE_START
+//        movieViewModel.makeApiCall(movieInfo);
     }
 
-    private void loadMostPopularNextPage() {
+    private void loadMostPopularNextPage(int currentPageNumber) {
         progressBar.setVisibility(View.VISIBLE);
-        Log.i(getString(R.string.TAG), "MOST POPULAR: CURRENT PAGE " + currentPage);
+        Log.i(getString(R.string.TAG), "CURRENT PAGE: " + currentPageNumber);
 
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Call<MovieInfoWrapper> movieInfo = apiCaller.getMostPopularMovies(apiKey, language, currentPage);
+//                Call<MovieInfoWrapper> movieInfo = apiCaller.getMostPopularMovies(apiKey, language, currentPage);
+//                movieViewModel.makeApiCall(movieInfo);
 
-                movieViewModel.makeApiCall(movieInfo);
-//                movieViewModel.getLiveDataInstance().observe(MainActivity.this, new Observer<MovieInfoWrapper>() {
-//                    @Override
-//                    public void onChanged(MovieInfoWrapper movieInfoWrapper) {
-//                        if(movieInfoWrapper != null) {
-//                            myMostPopularResultsList = movieInfoWrapper.getResultsList();
-//                            Log.i(getString(R.string.TAG), "MOST POPULAR PG NO CALLED: " + movieInfoWrapper.getPageNumber());
-//                            progressBar.setVisibility(View.GONE);
-//                            isLoading = false;
-//                            // add items to adapter
-//                            mostPopularAdapter.addAllItems(myMostPopularResultsList);
-//
-//                            if(currentPage == TOTAL_PAGES) {
-//                                isLastPage = true;
-//                                Log.i(getString(R.string.TAG), "END REACHED");
-//                            }
-//                        }
-//                        else {
-//                            Log.e(getString(R.string.TAG), "MOST POPULAR Failure");
-//                        }
-//                    }
-//                });
+                movieViewModel.getLiveDataForVerticalView(currentPageNumber).observe(MainActivity.this, new Observer<MovieInfoWrapper>() {
+                    @Override
+                    public void onChanged(MovieInfoWrapper movieInfoWrapper) {
+                        if(movieInfoWrapper != null) {
+                            myMostPopularResultsList = movieInfoWrapper.getResultsList();
+                            Log.i(getString(R.string.TAG), "MOST POPULAR PG NO CALLED: " + movieInfoWrapper.getPageNumber());
+                            progressBar.setVisibility(View.GONE);
+                            isLoading = false;
+                            // add items to adapter
+                            mostPopularAdapter.addAllItems(myMostPopularResultsList);
+
+                            if(currentPage == TOTAL_PAGES) {
+                                isLastPage = true;
+                                Log.i(getString(R.string.TAG), "END REACHED");
+                            }
+                        }
+                        else {
+                            Log.e(getString(R.string.TAG), "MOST POPULAR Failure");
+                        }
+                    }
+                });
             }
         }, 1500);
     }

@@ -38,9 +38,9 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
     @Override
     public void onBindViewHolder(@NonNull MostPopularViewHolder holder, int position) {
         ResultsClass result = resultList.get(position);
-        holder.movieTitleMostPopular.setText(result.getTitle());
-        holder.movieReleaseDateMostPopular.setText(result.getReleaseDate());
-        Glide.with(context).load(result.getPosterPath()).into(holder.imageMostPopular);
+        holder.getMovieTitleMostPopular().setText(result.getTitle());
+        holder.getMovieReleaseDateMostPopular().setText(result.getReleaseDate());
+        Glide.with(context).load(result.getPosterPath()).into(holder.getImageMostPopular());
     }
 
     @Override
@@ -55,16 +55,28 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
         }
     }
 
-    public class MostPopularViewHolder extends RecyclerView.ViewHolder {
+    public static class MostPopularViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageMostPopular;
-        TextView movieTitleMostPopular, movieReleaseDateMostPopular;
+        private ImageView imageMostPopular;
+        private TextView movieTitleMostPopular, movieReleaseDateMostPopular;
 
         public MostPopularViewHolder(@NonNull View itemView) {
             super(itemView);
             imageMostPopular = itemView.findViewById(R.id.imageMostPopular);
             movieTitleMostPopular = itemView.findViewById(R.id.movieTitleMostPopular);
             movieReleaseDateMostPopular = itemView.findViewById(R.id.movieReleaseDateMostPopular);
+        }
+
+        public ImageView getImageMostPopular() {
+            return imageMostPopular;
+        }
+
+        public TextView getMovieTitleMostPopular() {
+            return movieTitleMostPopular;
+        }
+
+        public TextView getMovieReleaseDateMostPopular() {
+            return movieReleaseDateMostPopular;
         }
     }
 

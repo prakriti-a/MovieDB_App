@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-// here event injection listener
 
     public final static String TAG = "MainActivity";
 
@@ -74,8 +73,9 @@ public class MainActivity extends AppCompatActivity {
         verticalRecyclerView.setLayoutManager(verticalLayoutManager);
         horizontalRecyclerView.setLayoutManager(horizontalLayoutManager);
 
+        getNowPlayingMoviesData();
         // NOW PLAYING horizontal list
-        movieViewModel.getLiveDataForHorizontalView(1).observe(this, new Observer<MovieInfoWrapper>() {
+        movieViewModel.getLiveDataForHorizontalView().observe(this, new Observer<MovieInfoWrapper>() {
             @Override
             public void onChanged(MovieInfoWrapper movieInfoWrapper) {
                 if(movieInfoWrapper != null) {
@@ -135,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
 //        movieViewModel.makeApiCallForVerticalData(START_PAGE);
     }
 
+    private void getNowPlayingMoviesData() {
+        movieViewModel.makeApiCallForHorizontalData(1);
+    }
 
     private void setMostPopularMoviesProgress() {
         progressBar.setVisibility(View.VISIBLE);
-//        Call<MovieInfoWrapper> movieInfo = apiCaller.getMostPopularMovies(apiKey, language, 1); // PAGE_START
-//        movieViewModel.makeApiCall(movieInfo);
     }
-
 
     private void loadMostPopularNextPage(int currentPageNumber) {
         progressBar.setVisibility(View.VISIBLE);
@@ -150,7 +150,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 movieViewModel.makeApiCallForVerticalData(currentPageNumber); // next page is fetched and changes observed above
-            }}, 1500);
+            }
+        }, 1500);
     }
 
 }

@@ -35,7 +35,7 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.No
     @Override
     public void onBindViewHolder(@NonNull NowPlayingViewHolder holder, int position) {
         ResultsClass result = resultList.get(position);
-        Glide.with(context).load(result.getPosterPath()).into(holder.imageNowPlaying);
+        Glide.with(context).load(result.getPosterPath()).into(holder.getImageNowPlaying());
     }
 
     @Override
@@ -50,13 +50,17 @@ public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.No
         }
     }
 
-    public class NowPlayingViewHolder extends RecyclerView.ViewHolder {
+    public static class NowPlayingViewHolder extends RecyclerView.ViewHolder {
 
-        ImageView imageNowPlaying;
+        private ImageView imageNowPlaying;
 
         public NowPlayingViewHolder(@NonNull View itemView) {
             super(itemView);
             imageNowPlaying = itemView.findViewById(R.id.imageNowPlaying);
+        }
+
+        public ImageView getImageNowPlaying() {
+            return imageNowPlaying;
         }
     }
 }

@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName;
 
 public class ResultsClass {
 
+    private final String IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
+
     @SerializedName("title")
     private String title;
 
@@ -30,7 +32,7 @@ public class ResultsClass {
     }
 
     public String getPosterPath() {
-        return "https://image.tmdb.org/t/p/w500" + posterPath;
+        return IMAGE_BASE_URL + posterPath;
     }
 
     public void setPosterPath(String posterPath) {

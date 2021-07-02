@@ -1,4 +1,4 @@
-package com.prakriti.moviedbapp;
+package com.prakriti.moviedbapp.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;

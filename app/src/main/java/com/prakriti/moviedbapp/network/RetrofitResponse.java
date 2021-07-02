@@ -28,12 +28,12 @@ public class RetrofitResponse {
             public void onResponse(Call<MovieInfoWrapper> call, Response<MovieInfoWrapper> response) {
                 if(response.isSuccessful()) {
                     movieResultData.setValue(response.body());
-                    // event injection manager
+                    // EIM
                 }
             }
             @Override
             public void onFailure(Call<MovieInfoWrapper> call, Throwable t) {
-                Log.e("MOVIE_BOX", "Retrofit Call Response Failure: "+ t.getMessage());
+                Log.e("RetrofitResponse", "Retrofit Call Response Failure: "+ t.getMessage());
             }
         });
         return movieResultData;

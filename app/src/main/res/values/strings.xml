@@ -2,5 +2,4 @@
     <string name="app_name">MovieBox</string>
     <string name="playing_now">Playing Now</string>
     <string name="most_popular">Most Popular</string>
-    <string name="TAG">MOVIE_BOX</string>
 </resources>

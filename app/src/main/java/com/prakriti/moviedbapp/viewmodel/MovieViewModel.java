@@ -8,7 +8,6 @@ import com.prakriti.moviedbapp.pojo.MovieInfoWrapper;
 
 public class MovieViewModel extends ViewModel {
 
-//    private MutableLiveData<MovieInfoWrapper> movieResults;
     private RetrofitResponse retrofitResponse = RetrofitResponse.getInstance();
 
     private MutableLiveData<MovieInfoWrapper> mostPopularMovieResults; // vertical
@@ -28,8 +27,8 @@ public class MovieViewModel extends ViewModel {
         return mostPopularMovieResults;
     }
 
-    public void makeApiCallForHorizontalData(int pageNumber) {
-        nowPlayingMovieResults = retrofitResponse.getNowPlayingResponse(pageNumber);
+    public void makeApiCallForHorizontalData() {
+        nowPlayingMovieResults = retrofitResponse.getNowPlayingResponse();
     }
 
     public void makeApiCallForVerticalData(int pageNumber) {

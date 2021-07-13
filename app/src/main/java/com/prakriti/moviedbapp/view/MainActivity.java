@@ -111,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
         // MOST POPULAR vertical list
         setMostPopularMoviesProgress();
+        getMostPopularMoviesData();
         movieViewModel.getLiveDataForVerticalView().observe(this, new Observer<MovieInfoWrapper>() { // observe changes
             @Override
             public void onChanged(MovieInfoWrapper movieInfoWrapper) {
@@ -136,7 +137,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getNowPlayingMoviesData() {
-        movieViewModel.makeApiCallForHorizontalData(1);
+        movieViewModel.makeApiCallForHorizontalData();
+    }
+
+    private void getMostPopularMoviesData() {
+        movieViewModel.makeApiCallForVerticalData(1);
     }
 
     private void setMostPopularMoviesProgress() {

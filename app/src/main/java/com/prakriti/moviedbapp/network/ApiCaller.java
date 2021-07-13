@@ -19,7 +19,7 @@ public interface ApiCaller {
 
 
     @GET("now_playing") // horizontal rv
-    Call<MovieInfoWrapper> getNowPlayingMovies(@Query("language") String language, @Query("page") int page, @Query("api_key") String api_key);
+    Call<MovieInfoWrapper> getNowPlayingMovies(@Query("language") String language, @Query("page") String page, @Query("api_key") String api_key);
 
     @GET("popular") // vertical rv
     Call<MovieInfoWrapper> getMostPopularMovies(@Query("api_key") String api_key, @Query("language") String language, @Query("page") int page);

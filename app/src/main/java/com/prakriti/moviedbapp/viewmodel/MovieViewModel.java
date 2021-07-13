@@ -8,7 +8,7 @@ import com.prakriti.moviedbapp.pojo.MovieInfoWrapper;
 
 public class MovieViewModel extends ViewModel {
 
-    private RetrofitResponse retrofitResponse = RetrofitResponse.getInstance();
+    private final RetrofitResponse retrofitResponse = RetrofitResponse.getInstance();
 
     private MutableLiveData<MovieInfoWrapper> mostPopularMovieResults; // vertical
     private MutableLiveData<MovieInfoWrapper> nowPlayingMovieResults; // horizontal

@@ -19,7 +19,7 @@ import java.util.List;
 public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.MostPopularViewHolder> {
 // Pagination code here
 
-    private Context context;
+    private final Context context;
     private List<ResultsClass> resultList;
 
     public MostPopularAdapter(Context context, List<ResultsClass> resultList) {

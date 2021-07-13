@@ -8,8 +8,6 @@ import com.prakriti.moviedbapp.network.ApiCaller;
 import com.prakriti.moviedbapp.network.RetrofitClient;
 import com.prakriti.moviedbapp.pojo.MovieInfoWrapper;
 
-import java.util.concurrent.Executor;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,7 +23,7 @@ public class RetrofitResponse {
 
     private final String apiKey = "d704e1c019b3f0cbd05294ca7851b0a6";
     private String language = "en-US";
-    private String horizontalPage = "undefined";
+    private final String horizontalPage = "undefined";
 
     public final static String TAG = "RetrofitResponse";
 

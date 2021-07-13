@@ -1,7 +1,6 @@
 package com.prakriti.moviedbapp.network;
 
 import com.prakriti.moviedbapp.pojo.MovieInfoWrapper;
-import com.prakriti.moviedbapp.pojo.ResultsClass;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

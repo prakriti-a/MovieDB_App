@@ -23,6 +23,7 @@ import com.prakriti.moviedbapp.viewmodel.MovieViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         // center text in action bar
-        getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setCustomView(R.layout.custom_action_bar);
 
         handler = new Handler();
@@ -112,25 +113,23 @@ public class MainActivity extends AppCompatActivity {
         // MOST POPULAR vertical list
         setMostPopularMoviesProgress();
         getMostPopularMoviesData();
-        movieViewModel.getLiveDataForVerticalView().observe(this, new Observer<MovieInfoWrapper>() { // observe changes
-            @Override
-            public void onChanged(MovieInfoWrapper movieInfoWrapper) {
-                if(movieInfoWrapper != null) {
-                    progressBar.setVisibility(View.GONE);
-                    isLoading = false;
-                    myMostPopularResultsList = movieInfoWrapper.getResultsList();
-                    Log.i(TAG, "MOST POPULAR: PG NO " + movieInfoWrapper.getPageNumber());
-                    // to set total pages
+        // observe changes
+        movieViewModel.getLiveDataForVerticalView().observe(this, movieInfoWrapper -> {
+            if(movieInfoWrapper != null) {
+                progressBar.setVisibility(View.GONE);
+                isLoading = false;
+                myMostPopularResultsList = movieInfoWrapper.getResultsList();
+                Log.i(TAG, "MOST POPULAR: PG NO " + movieInfoWrapper.getPageNumber());
+                // to set total pages
 //                    TOTAL_PAGES = response.body().getTotalPages();
-                    mostPopularAdapter.addAllItems(myMostPopularResultsList);
-                    if(currentPage == TOTAL_PAGES) {
-                        isLastPage = true;
-                        Log.i(TAG, "END REACHED");
-                    }
+                mostPopularAdapter.addAllItems(myMostPopularResultsList);
+                if(currentPage == TOTAL_PAGES) {
+                    isLastPage = true;
+                    Log.i(TAG, "END REACHED");
                 }
-                else {
-                    Log.e(TAG, "MOST POPULAR Failure");
-                }
+            }
+            else {
+                Log.e(TAG, "MOST POPULAR Failure");
             }
         });
 //        movieViewModel.makeApiCallForVerticalData(START_PAGE);
@@ -151,11 +150,8 @@ public class MainActivity extends AppCompatActivity {
     private void loadMostPopularNextPage(int currentPageNumber) {
         progressBar.setVisibility(View.VISIBLE);
         Log.i(TAG, "CURRENT PAGE: " + currentPageNumber);
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                movieViewModel.makeApiCallForVerticalData(currentPageNumber); // next page is fetched and changes observed above
-            }
+        handler.postDelayed(() -> {
+            movieViewModel.makeApiCallForVerticalData(currentPageNumber); // next page is fetched and changes observed above
         }, 1500);
     }
 

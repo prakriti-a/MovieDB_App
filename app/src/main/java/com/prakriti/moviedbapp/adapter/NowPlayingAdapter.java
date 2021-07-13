@@ -17,7 +17,7 @@ import java.util.List;
 
 public class NowPlayingAdapter extends RecyclerView.Adapter<NowPlayingAdapter.NowPlayingViewHolder> {
 
-    private Context context;
+    private final Context context;
     private List<ResultsClass> resultList;
 
     public NowPlayingAdapter(Context context, List<ResultsClass> resultList) {
